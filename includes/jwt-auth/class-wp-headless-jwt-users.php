@@ -12,6 +12,7 @@ class WP_Headless_Jwt_Users {
 
 	public function __construct() {
 
+		//Maybe auth user via token
 		add_filter(
 			'determine_current_user',
 			array(
