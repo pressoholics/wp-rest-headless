@@ -79,9 +79,10 @@ class WP_Headless_Jwt_Tokens {
 		 * @see WP_Headless_Jwt_Tokens::generate()
 		 *
 		 * @param array $response
+		 * @param string $token
 		 * @param object $user
 		 */
-		$response = apply_filters( 'wp_headless_rest__generate_jwt_response', $response, $user );
+		$response = apply_filters( 'wp_headless_rest__generate_jwt_response', $response, $token, $user );
 
 		return rest_ensure_response( $response );
 	}

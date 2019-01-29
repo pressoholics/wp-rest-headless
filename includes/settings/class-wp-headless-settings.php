@@ -153,39 +153,10 @@ class WP_Headless_Settings extends WP_Headless_Core {
 			$this->menu_slug
 		);
 
-		//Create main options section and register settings
-		$this->create_tab__main_options();
-
 		//Create endpoints section and register settings
-		//$this->create_tab__endpoints();
+		$this->create_tab__request_headers();
 
 		return;
-	}
-
-	/**
-	 * create_tab__main_options
-	 *
-	 * @CALLED BY $this->register_settings()
-	 *
-	 * Create instance of class responsible for Main Options tab
-	 *
-	 * @access private
-	 * @author Ben Moody
-	 */
-	private function create_tab__main_options() {
-
-		//Detect current options page tab
-		$active_tab = WP_Headless_Settings::get_active_settings_page_tab();
-
-		//Main options tab
-		if ( 'main-options' === $active_tab ) {
-
-			$main_options = new WP_Headless_Settings_Main_Options();
-
-			$main_options->create_fields();
-
-		}
-
 	}
 
 	/**
@@ -200,7 +171,7 @@ class WP_Headless_Settings extends WP_Headless_Core {
 	public static function get_active_settings_page_tab() {
 
 		//then we get the active tab.
-		$active_tab = 'main-options';
+		$active_tab = 'request-headers';
 
 		if ( isset( $_GET['tab'] ) ) {
 
@@ -221,15 +192,42 @@ class WP_Headless_Settings extends WP_Headless_Core {
 	 * @access private
 	 * @author Ben Moody
 	 */
-	private function create_tab__endpoints() {
+	private function create_tab__request_headers() {
 
 		//Detect current options page tab
 		$active_tab = WP_Headless_Settings::get_active_settings_page_tab();
 
-		//Main options tab
-		if ( 'post-types' === $active_tab ) {
+		//Headers options tab
+		if ( 'request-headers' === $active_tab ) {
 
-			$post_types = new WP_Headless_Settings_Post_Types();
+			$post_types = new WP_Headless_Settings_Request_Headers();
+
+			$post_types->create_fields();
+
+		}
+
+		//JWT options tab
+		if ( 'rest-jwt' === $active_tab ) {
+
+			$post_types = new WP_Headless_Settings_Rest_Jwt();
+
+			$post_types->create_fields();
+
+		}
+
+		//REST nonce options tab
+		if ( 'rest-nonce' === $active_tab ) {
+
+			$post_types = new WP_Headless_Settings_Rest_Nonce();
+
+			$post_types->create_fields();
+
+		}
+
+		//REST cleanup options tab
+		if ( 'rest-cleanup' === $active_tab ) {
+
+			$post_types = new WP_Headless_Settings_Rest_Cleanup();
 
 			$post_types->create_fields();
 
@@ -255,41 +253,29 @@ class WP_Headless_Settings extends WP_Headless_Core {
 		//Detect current options page tab
 		$active_tab = WP_Headless_Settings::get_active_settings_page_tab();
 
-		if ( 'main-options' === $active_tab ) {
+		if ( 'request-headers' === $active_tab ) {
 
-			$template_path = wp_rest_headless_get_template_path( 'settings_main', 'help' );
+			$template_path = wp_rest_headless_get_template_path( 'request_headers', 'help' );
 
-			//Check if a valid path for include
-			if ( validate_file( $template_path ) > 0 ) {
+			wp_rest_headless_include_file( $template_path );
 
-				//Failed path validation
-				return new WP_Error(
-					'render_tab_section_help',
-					'File require path failed path validation',
-					$template_path
-				);
+		} elseif ( 'rest-jwt' === $active_tab ) {
 
-			}
+			$template_path = wp_rest_headless_get_template_path( 'rest_jwt', 'help' );
 
-			require_once( $template_path );
+			wp_rest_headless_include_file( $template_path );
 
-		} elseif ( 'post-types' === $active_tab ) {
+		} elseif ( 'rest-nonce' === $active_tab ) {
 
-			$template_path = wp_rest_headless_get_template_path( 'settings_post_types', 'help' );
+			$template_path = wp_rest_headless_get_template_path( 'rest_nonce', 'help' );
 
-			//Check if a valid path for include
-			if ( validate_file( $template_path ) > 0 ) {
+			wp_rest_headless_include_file( $template_path );
 
-				//Failed path validation
-				return new WP_Error(
-					'render_tab_section_help',
-					'File require path failed path validation',
-					$template_path
-				);
+		} elseif ( 'rest-cleanup' === $active_tab ) {
 
-			}
+			$template_path = wp_rest_headless_get_template_path( 'rest_cleanup', 'help' );
 
-			require_once( $template_path );
+			wp_rest_headless_include_file( $template_path );
 
 		}
 

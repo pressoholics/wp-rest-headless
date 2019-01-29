@@ -8,21 +8,66 @@
  */
 
 class WP_Headless_Jwt_Rest_Api {
-
-	public static $jwt_namespace = 'wp-headless/v1';
+	
 	public static $jwt_get_route = 'jwt/get-token';
 	public static $jwt_validate_route = 'jwt/validate-token';
+	public static $enable_jwt = false;
 
 	public function __construct() {
 
-		//Register JWT Auth custom rest endpoint
+		//Maybe enable rest nonce
 		add_action(
-			'rest_api_init',
+			'init',
 			array(
 				$this,
-				'register_rest_routes',
+				'maybe_enable_jwt',
 			)
 		);
+
+	}
+
+	/**
+	 * maybe_enable_jwt
+	 *
+	 * @CALLED BY /ACTION 'init'
+	 *
+	 * Run process to detect if jwt is enabled
+	 *
+	 * @example enable with: add_filter( 'wp_headless_rest__enable_jwt',
+	 *     '__return_true' );
+	 *
+	 * @access public
+	 * @author Ben Moody
+	 */
+	public function maybe_enable_jwt() {
+
+		/**
+		 * wp_headless_rest__enable_jwt
+		 *
+		 * Allows devs to enable to use JWT authentication
+		 *
+		 * @example add_filter( 'wp_headless_rest__enable_jwt', '__return_true' );
+		 *
+		 * @since 1.0.0
+		 *
+		 * @see WP_Headless_Rest_Api_Nonce::__construct()
+		 *
+		 * @param bool
+		 */
+		self::$enable_jwt = apply_filters( 'wp_headless_rest__enable_jwt', self::$enable_jwt );
+
+		if ( true === self::$enable_jwt ) {
+
+			//Register JWT Auth custom rest endpoint
+			add_action(
+				'rest_api_init',
+				array(
+					$this,
+					'register_rest_routes',
+				)
+			);
+
+		}
 
 	}
 
@@ -142,7 +187,7 @@ class WP_Headless_Jwt_Rest_Api {
 	public function register_rest_routes() {
 
 		register_rest_route(
-			self::$jwt_namespace,
+			WP_Headless_Core::$plugin_rest_namespace,
 			self::$jwt_get_route,
 			array(
 				'methods'  => 'POST',
@@ -163,7 +208,7 @@ class WP_Headless_Jwt_Rest_Api {
 		);
 
 		register_rest_route(
-			self::$jwt_namespace,
+			WP_Headless_Core::$plugin_rest_namespace,
 			self::$jwt_validate_route,
 			array(
 				'methods'  => 'POST',

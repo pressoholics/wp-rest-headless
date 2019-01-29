@@ -18,14 +18,23 @@
 
 		<!-- wordpress provides the styling for tabs. -->
 		<h2 class="nav-tab-wrapper">
-			<!-- when tab buttons are clicked we jump back to the same page but with a new parameter that represents the clicked tab. accordingly we make it active -->
-			<a href="?page=<?php echo rawurlencode( $menu_slug ); ?>&tab=main-options" class="nav-tab <?php if('main-options' === $active_tab){echo 'nav-tab-active';} ?> ">
-				<?php echo esc_html_x( 'Main Menu', 'tab nav title', WP_REST_HEADLESS_TEXT_DOMAIN ); ?>
+
+			<a href="?page=<?php echo rawurlencode( $menu_slug ); ?>&tab=request-headers" class="nav-tab <?php if('request-headers' === $active_tab){echo 'nav-tab-active';} ?> ">
+				<?php echo esc_html_x( 'Request Headers', 'tab nav title', WP_REST_HEADLESS_TEXT_DOMAIN ); ?>
 			</a>
 
-			<a href="?page=<?php echo rawurlencode( $menu_slug ); ?>&tab=post-types" class="nav-tab <?php if('post-types' === $active_tab){echo 'nav-tab-active';} ?> ">
-				<?php echo esc_html_x( 'Post Types', 'tab nav title', WP_REST_HEADLESS_TEXT_DOMAIN ); ?>
+			<a href="?page=<?php echo rawurlencode( $menu_slug ); ?>&tab=rest-jwt" class="nav-tab <?php if('rest-jwt' === $active_tab){echo 'nav-tab-active';} ?> ">
+				<?php echo esc_html_x( 'JWT Authentication', 'tab nav title', WP_REST_HEADLESS_TEXT_DOMAIN ); ?>
 			</a>
+
+			<a href="?page=<?php echo rawurlencode( $menu_slug ); ?>&tab=rest-nonce" class="nav-tab <?php if('rest-nonce' === $active_tab){echo 'nav-tab-active';} ?> ">
+				<?php echo esc_html_x( 'REST Nonce', 'tab nav title', WP_REST_HEADLESS_TEXT_DOMAIN ); ?>
+			</a>
+
+			<a href="?page=<?php echo rawurlencode( $menu_slug ); ?>&tab=rest-cleanup" class="nav-tab <?php if('rest-cleanup' === $active_tab){echo 'nav-tab-active';} ?> ">
+				<?php echo esc_html_x( 'REST Cleanup', 'tab nav title', WP_REST_HEADLESS_TEXT_DOMAIN ); ?>
+			</a>
+
 		</h2>
 
 		<form method="post" action="options.php">
@@ -34,8 +43,6 @@
 			settings_fields( $option_group );
 
 			do_settings_sections( $menu_slug );
-
-			submit_button();
 
 			?>
 		</form>

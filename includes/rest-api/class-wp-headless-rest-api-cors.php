@@ -4,18 +4,26 @@
  *
  * Handle setting up headers for CORS
  *
+ * Configuration:
+ *
+ * Disable headers:
+ *  add_filter( 'wp_headless_rest__disable_cors', '__return_true' );
+ *
+ * Filter header rules:
+ *  add_filter( 'wp_headless_rest__cors_rules', array() );
+ *
  * @author Ben Moody
  */
 
 class WP_Headless_Rest_Api_Cors {
 
-	private $cors_rules;
-	private $disable = false;
+	public static $cors_rules;
+	public static $disable = false;
 
 	public function __construct() {
 
 		add_action(
-			'rest_api_init',
+			'init',
 			array(
 				$this,
 				'setup_rest_api_header_rules',
@@ -60,14 +68,14 @@ class WP_Headless_Rest_Api_Cors {
 		 *
 		 * @param bool $disable_custom_rules
 		 */
-		$this->disable = apply_filters( 'wp_headless_rest__disable_cors', $this->disable );
+		self::$disable = apply_filters( 'wp_headless_rest__disable_cors', self::$disable );
 
-		if ( true === $this->disable ) {
+		if ( true === self::$disable ) {
 			return;
 		}
 
 		//vars
-		$this->cors_rules = array();
+		self::$cors_rules = array();
 		$default_rules    = array();
 		$http_origin      = get_http_origin();
 		$origin           = esc_url_raw( site_url() );
@@ -84,7 +92,7 @@ class WP_Headless_Rest_Api_Cors {
 			'Access-Control-Allow-Origin'      => $origin,
 			'Access-Control-Allow-Methods'     => 'GET, POST',
 			'Access-Control-Allow-Credentials' => 'true',
-			'Access-Control-Allow-Headers'     => 'Access-Control-Allow-Headers, Content-Type, Authorization, origin, x-wp-nonce',
+			'Access-Control-Allow-Headers'     => 'Access-Control-Allow-Headers, Content-Type, Authorization, origin, x-wp-nonce, x-wp-nonce-generator',
 			'Access-Control-Expose-Headers'    => array( 'Link', false ), //Use array if replace param is required
 		);
 
@@ -99,7 +107,7 @@ class WP_Headless_Rest_Api_Cors {
 		 *
 		 * @param array $rules
 		 */
-		$this->cors_rules = apply_filters( 'wp_headless_rest__cors_rules', $default_rules );
+		self::$cors_rules = apply_filters( 'wp_headless_rest__cors_rules', $default_rules );
 
 	}
 
@@ -117,12 +125,12 @@ class WP_Headless_Rest_Api_Cors {
 	*/
 	public function generate_cors_headers( $served ) {
 
-		if ( ! is_array( $this->cors_rules ) ) {
+		if ( ! is_array( self::$cors_rules ) ) {
 			return $served;
 		}
 
 		//Loop rules and create header item for each
-		foreach ( $this->cors_rules as $key => $rule ) {
+		foreach ( self::$cors_rules as $key => $rule ) {
 
 			if ( is_array( $rule ) ) {
 

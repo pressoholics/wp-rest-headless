@@ -1,13 +1,13 @@
 <?php
 /**
- * WP_Headless_Settings_Endpoints
+ * WP_Headless_Settings_Request_Headers
  *
  * Handles all logic for generating the settings Main Option section
  *
  * @author Ben Moody
  */
 
-class WP_Headless_Settings_Endpoints extends WP_Headless_Settings {
+class WP_Headless_Settings_Request_Headers extends WP_Headless_Settings {
 
 	/**
 	 * create_fields
@@ -41,13 +41,13 @@ class WP_Headless_Settings_Endpoints extends WP_Headless_Settings {
 	private function register_field__post_types() {
 
 		//vars
-		$field_slug = self::$plugin_prefix . 'post-types-list';
+		$field_slug = self::$plugin_prefix . 'request-headers';
 
 		//Register field
 		add_settings_field(
 			$field_slug,
-			esc_html_x( 'Registered Post Types', 'settings field title', WP_REST_HEADLESS_TEXT_DOMAIN ),
-			array( $this, 'render_post_types_list' ),
+			esc_html_x( 'Current Allowed request headers', 'settings field title', WP_REST_HEADLESS_TEXT_DOMAIN ),
+			array( $this, 'render_list' ),
 			$this->menu_slug,
 			$this->settings_section_id
 		);
@@ -55,30 +55,28 @@ class WP_Headless_Settings_Endpoints extends WP_Headless_Settings {
 	}
 
 	/**
-	 * render_post_types_list
+	 * render_list
 	 *
 	 * @CALLED BY register_field__manual_trigger() :: add_settings_field
 	 *     callback
 	 *
-	 * Renders the list of registered post types
+	 * Renders the list of registered request headers
 	 *
 	 * @access public
 	 * @author Ben Moody
 	 */
-	public function render_post_types_list() {
+	public function render_list() {
 
-		//vars
-		$post_types = WP_Headless_Core::$registered_post_types;
-
-		if ( is_array( $post_types ) && ! empty( $post_types ) ) {
+		if ( is_array( WP_Headless_Rest_Api_Cors::$cors_rules ) && ! empty( WP_Headless_Rest_Api_Cors::$cors_rules ) ) {
 
 			?>
 			<ul>
-				<?php foreach ( $post_types as $post_type ) : ?>
+				<?php foreach ( WP_Headless_Rest_Api_Cors::$cors_rules as $rule => $value ) : if(is_array($value)){ continue; } ?>
 					<li>
-						<strong style="color: green;">
-							<?php echo esc_html( $post_type ); ?>
-						</strong>
+						<strong>
+							<?php echo esc_html($rule); ?>
+						</strong> :
+						<?php echo esc_html($value); ?>
 					</li>
 				<?php endforeach; ?>
 			</ul>
@@ -87,7 +85,7 @@ class WP_Headless_Settings_Endpoints extends WP_Headless_Settings {
 		} else {
 
 			?>
-			<p style="color: red;">Please register some post types using the
+			<p style="color: red;">Please Enable the cors headers via the filter OR register some header rules using the
 				filter above.</p>
 			<?php
 

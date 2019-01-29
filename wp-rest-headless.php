@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: Wordpress REST Headless CMS
-Description:
-Author:
+Plugin Name: Wordpress Headless CMS Framework
+Description: Plugin sets up WordPress as a headless CMS. Provides JSON Web Token Authentication, Adds Gutenberg block data to REST responses, Protects REST requests with nonce, cleans up REST response objects, removes unrequired REST endpoints, and can disabled the frontend
+Author: Benjamin Moody
 Version: 1.0
 */
 
@@ -43,7 +43,7 @@ function wp_rest_headless_boot_plugin() {
 
 	//vars
 	$includes_path = WP_REST_HEADLESS_PLUGIN_BASE_DIR . '/includes';
-	$vendors_path = WP_REST_HEADLESS_PLUGIN_BASE_DIR . '/vendor';
+	$vendors_path  = WP_REST_HEADLESS_PLUGIN_BASE_DIR . '/vendor';
 
 	//Load JWT vendor dependent
 	wp_rest_headless_include_file( "{$vendors_path}/autoload.php" );
@@ -60,14 +60,19 @@ function wp_rest_headless_boot_plugin() {
 	wp_rest_headless_include_file( "{$includes_path}/rest-api/class-wp-headless-rest-api-cors.php" );
 	wp_rest_headless_include_file( "{$includes_path}/rest-api/class-wp-headless-rest-api-cleanup.php" );
 
+	//Include plugin SECURITY files
+	wp_rest_headless_include_file( "{$includes_path}/security/class-wp-headless-rest-api-nonce.php" );
+	wp_rest_headless_include_file( "{$includes_path}/security/class-wp-headless-disable-front-end.php" );
+
+	//Include plugin Gutenberg files
+	wp_rest_headless_include_file( "{$includes_path}/gutenberg/class-wp-headless-rest-gutenberg-blocks.php" );
+
 	//Include plugin settings file
 	wp_rest_headless_include_file( "{$includes_path}/settings/class-wp-headless-settings.php" );
-
-	//Include plugin main options tab settings file
-	wp_rest_headless_include_file( "{$includes_path}/settings/class-wp-headless-settings-main-options.php" );
-
-	//Include plugin post types tab settings file
-	wp_rest_headless_include_file( "{$includes_path}/settings/class-wp-headless-settings-post-types.php" );
+	wp_rest_headless_include_file( "{$includes_path}/settings/class-wp-headless-settings-request-headers.php" );
+	wp_rest_headless_include_file( "{$includes_path}/settings/class-wp-headless-settings-rest-jwt.php" );
+	wp_rest_headless_include_file( "{$includes_path}/settings/class-wp-headless-settings-rest-nonce.php" );
+	wp_rest_headless_include_file( "{$includes_path}/settings/class-wp-headless-settings-rest-cleanup.php" );
 
 	define( 'WP_REST_HEADLESS_PLUGIN_LOADED', true );
 
@@ -84,7 +89,7 @@ function wp_rest_headless_boot_plugin() {
  * @access    public
  * @author    Ben Moody
  */
-function wp_rest_headless_include_file( $path ) {
+function wp_rest_headless_include_file( $path, $require = false ) {
 
 	//Check if a valid path for include
 	if ( validate_file( $path ) > 0 ) {
@@ -98,7 +103,15 @@ function wp_rest_headless_include_file( $path ) {
 
 	}
 
-	include_once( $path );
+	if ( true === $require ) {
+
+		require_once( $path );
+
+	} else {
+
+		include_once( $path );
+
+	}
 
 	return true;
 }

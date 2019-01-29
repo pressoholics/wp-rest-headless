@@ -11,6 +11,8 @@ class WP_Headless_Core {
 
 	protected static $plugin_prefix;
 
+	public static $plugin_rest_namespace = 'wp-headless/v1';
+
 	public function __construct() {
 
 		//Set plugin prefix
