@@ -277,6 +277,24 @@ class WP_Headless_Settings extends WP_Headless_Core {
 
 			wp_rest_headless_include_file( $template_path );
 
+		} elseif ( 'rest-gutenberg' === $active_tab ) {
+
+			$template_path = wp_rest_headless_get_template_path( 'rest_gutenberg', 'help' );
+
+			wp_rest_headless_include_file( $template_path );
+
+		} elseif ( 'disable-frontend' === $active_tab ) {
+
+			$template_path = wp_rest_headless_get_template_path( 'disable_frontend', 'help' );
+
+			wp_rest_headless_include_file( $template_path );
+
+		} elseif ( 'quick-start' === $active_tab ) {
+
+			$template_path = wp_rest_headless_get_template_path( 'quick_start', 'help' );
+
+			wp_rest_headless_include_file( $template_path );
+
 		}
 
 		return;

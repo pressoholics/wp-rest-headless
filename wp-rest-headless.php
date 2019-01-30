@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Wordpress Headless CMS Framework
+Plugin Name: WP Headless CMS Framework
 Description: Plugin sets up WordPress as a headless CMS. Provides JSON Web Token Authentication, Adds Gutenberg block data to REST responses, Protects REST requests with nonce, cleans up REST response objects, removes unrequired REST endpoints, and can disabled the frontend
 Author: Benjamin Moody
 Version: 1.0
@@ -20,7 +20,7 @@ define( 'WP_REST_HEADLESS_PLUGIN_BASE_URL', plugin_dir_url( __FILE__ ) );
 /**
  * Define min WordPress Version
  */
-define( 'WP_REST_HEADLESS_PLUGIN__MINIMUM_WP_VERSION', '4.0' );
+define( 'WP_REST_HEADLESS_PLUGIN__MINIMUM_WP_VERSION', '5.0.0' );
 
 /**
  * Define plugin text domain

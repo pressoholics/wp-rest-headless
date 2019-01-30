@@ -15,7 +15,7 @@
 
 class WP_Headless_Rest_Disable_Frontend {
 
-	private $disable_front_end = true;
+	public static $disable_front_end = true;
 
 	public function __construct() {
 
@@ -58,9 +58,9 @@ class WP_Headless_Rest_Disable_Frontend {
 		 *
 		 * @param bool
 		 */
-		$this->disable_front_end = apply_filters( 'wp_headless_rest__disable_front_end', $this->disable_front_end );
+		self::$disable_front_end = apply_filters( 'wp_headless_rest__disable_front_end', self::$disable_front_end );
 
-		if ( true === $this->disable_front_end ) {
+		if ( true === self::$disable_front_end ) {
 
 			//Set 404 for all template redirects
 			add_action(

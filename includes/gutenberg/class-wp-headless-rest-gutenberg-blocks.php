@@ -16,7 +16,7 @@
 
 class WP_Headless_Rest_Gutenberg_Blocks {
 
-	private $enable_response = false;
+	public static $enable_response = false;
 
 	public function __construct() {
 
@@ -65,9 +65,9 @@ class WP_Headless_Rest_Gutenberg_Blocks {
 		 *
 		 * @param bool
 		 */
-		$this->enable_response = apply_filters( 'wp_headless_rest__enable_rest_gutenberg_blocks', $this->enable_response );
+		self::$enable_response = apply_filters( 'wp_headless_rest__enable_rest_gutenberg_blocks', self::$enable_response );
 
-		if ( true === $this->enable_response ) {
+		if ( true === self::$enable_response ) {
 
 			//Add gutenberg blocks to post response object
 			$this->add_gutenberg_to_post_response();

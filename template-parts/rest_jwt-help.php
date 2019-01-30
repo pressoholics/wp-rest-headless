@@ -12,6 +12,12 @@ if( true === WP_Headless_Jwt_Rest_Api::$enable_jwt ) {
 }
 ?>
 
+<div style="background:#0073aa; padding:20px;" >
+	<a href="https://documenter.getpostman.com/view/1175138/RztkPpV4" target="_blank" style="color: #ffffff;">
+		See example requests in plugin docs!!
+	</a>
+</div>
+
 <h2>Status: <?php echo wp_kses_post( $status ); ?></h2>
 
 <h4>Enable JSON Web Token Authentication with</h4>

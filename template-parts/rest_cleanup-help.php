@@ -27,7 +27,7 @@ add_filter( 'wp_headless_rest__enable_rest_cleanup', '__return_true' );
 
 <h4>Set which endpoints to disable:</h4>
 
-<p>You can disable REST api enpoint you are not using for the public:</p>
+<p>You can disable REST api enpoints that you are not using and hide them from public access:</p>
 
 <pre>
 add_filter( 'wp_headless_rest__rest_endpoints_to_remove', 'wp_rest_headless_disable_endpoints' );

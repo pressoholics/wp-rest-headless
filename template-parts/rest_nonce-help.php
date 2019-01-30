@@ -7,6 +7,12 @@
  */
 ?>
 
+<div style="background:#0073aa; padding:20px;" >
+	<a href="https://documenter.getpostman.com/view/1175138/RztkPpV4" target="_blank" style="color: #ffffff;">
+		See example requests in plugin docs!!
+	</a>
+</div>
+
 <p>This helps to add an extra layer of security for your public REST API endpoints by ensuring that all requests to the REST API must include a nonce.</p>
 
 <h2>Status:</h2>
@@ -26,7 +32,7 @@
 		REST Nonce Check :
 		<?php
 		$status = '<strong style="color:red;">Disabled</strong>';
-		if( false === WP_Headless_Rest_Api_Nonce::$disable_nonce_check ) {
+		if( true === WP_Headless_Rest_Api_Nonce::$disable_nonce_check ) {
 			$status = '<strong style="color:green;">Enabled</strong>';
 		}
 		echo wp_kses_post( $status );

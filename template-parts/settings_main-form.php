@@ -19,6 +19,10 @@
 		<!-- wordpress provides the styling for tabs. -->
 		<h2 class="nav-tab-wrapper">
 
+			<a href="?page=<?php echo rawurlencode( $menu_slug ); ?>&tab=quick-start" class="nav-tab <?php if('quick-start' === $active_tab){echo 'nav-tab-active';} ?> ">
+				<?php echo esc_html_x( 'Quick Start', 'tab nav title', WP_REST_HEADLESS_TEXT_DOMAIN ); ?>
+			</a>
+
 			<a href="?page=<?php echo rawurlencode( $menu_slug ); ?>&tab=request-headers" class="nav-tab <?php if('request-headers' === $active_tab){echo 'nav-tab-active';} ?> ">
 				<?php echo esc_html_x( 'Request Headers', 'tab nav title', WP_REST_HEADLESS_TEXT_DOMAIN ); ?>
 			</a>
@@ -33,6 +37,14 @@
 
 			<a href="?page=<?php echo rawurlencode( $menu_slug ); ?>&tab=rest-cleanup" class="nav-tab <?php if('rest-cleanup' === $active_tab){echo 'nav-tab-active';} ?> ">
 				<?php echo esc_html_x( 'REST Cleanup', 'tab nav title', WP_REST_HEADLESS_TEXT_DOMAIN ); ?>
+			</a>
+
+			<a href="?page=<?php echo rawurlencode( $menu_slug ); ?>&tab=rest-gutenberg" class="nav-tab <?php if('rest-gutenberg' === $active_tab){echo 'nav-tab-active';} ?> ">
+				<?php echo esc_html_x( 'REST Gutenberg', 'tab nav title', WP_REST_HEADLESS_TEXT_DOMAIN ); ?>
+			</a>
+
+			<a href="?page=<?php echo rawurlencode( $menu_slug ); ?>&tab=disable-frontend" class="nav-tab <?php if('disable-frontend' === $active_tab){echo 'nav-tab-active';} ?> ">
+				<?php echo esc_html_x( 'Disable Frontend', 'tab nav title', WP_REST_HEADLESS_TEXT_DOMAIN ); ?>
 			</a>
 
 		</h2>

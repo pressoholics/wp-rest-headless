@@ -53,8 +53,8 @@ class WP_Headless_Jwt_Users {
 			$error_code = $output->get_error_code();
 
 			$output = new WP_Error(
-				"User Auth Error: {$error_code}",
-				$output->get_error_message( $error_code ),
+				'User Auth Error',
+				'Either username or password are incorrect',
 				array(
 					'status' => 403,
 				)
