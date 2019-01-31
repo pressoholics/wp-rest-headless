@@ -1,4 +1,4 @@
-=== Wordpress Headless CMS Framework ===
+=== WP Headless CMS Framework ===
 Contributors: ben.moody
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
@@ -18,7 +18,7 @@ Framework options include:
 * Protects REST requests with nonce (optional)
 * Cleans up REST response objects (optional)
 * Removes non required REST endpoints (optional)
-* Disables the fronted (optional)
+* Disables the frontend (optional)
 
 All modules can be enabled/disabled or configured to suit most if not all WordPress as a headless CMS use cases.
 
@@ -41,6 +41,7 @@ Maybe use these modules:
 * Protects REST requests with nonce
 * Cleans up REST response objects
 * Removes non required REST endpoints
+* Disable the WordPress frontend
 
 You get the idea.
 
