@@ -30,6 +30,7 @@ add_filter( 'wp_headless_rest__enable_jwt', '__return_true' );
 	RewriteEngine on
 	RewriteCond %{HTTP:Authorization} ^(.*)
 	RewriteRule ^(.*) - [E=HTTP_AUTHORIZATION:%1]
+	SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
 </pre>
 
 <hr/>

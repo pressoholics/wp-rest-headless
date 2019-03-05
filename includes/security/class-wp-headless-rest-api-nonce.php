@@ -278,6 +278,14 @@ class WP_Headless_Rest_Api_Nonce {
 		if ( ! is_wp_error( $request_jwt_token ) ) {
 			return true;
 		}
+		
+		//Allow requests to JWT get-token endpoint
+		if(
+			isset($_SERVER['REQUEST_URI']) &&
+			(false !== strpos($_SERVER['REQUEST_URI'], '/wp-json/wp-headless/v1/jwt/get-token'))
+		) {
+			return true;
+		}
 
 		//Allow requests to the nonce validate endpoint
 		if ( 'validate' === self::is_rest_nonce_generator_request() ) {
