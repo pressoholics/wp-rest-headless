@@ -252,17 +252,18 @@ class WP_Headless_Rest_Api_Cleanup {
 
 		//vars
 		$endpoints_to_remove = array(
-			'media',
-			'types',
-			'statuses',
-			'taxonomies',
-			'tags',
-			'users',
-			'comments',
-			'settings',
-			'themes',
-			'blocks',
-			'oembed',
+			'/wp/v2/media',
+			'/wp/v2/types',
+			'/wp/v2/statuses',
+			'/wp/v2/taxonomies',
+			'/wp/v2/tags',
+			'/wp/v2/users',
+			'/wp/v2/comments',
+			'/wp/v2/settings',
+			'/wp/v2/themes',
+			'/wp/v2/blocks',
+			'/wp/v2/block-renderer',
+			'/oembed/',
 			//JETPACK
 			'jp_pay_product',
 			'jp_pay_order',
@@ -293,67 +294,11 @@ class WP_Headless_Rest_Api_Cleanup {
 
 		foreach ( $endpoints_to_remove as $endpoint ) {
 
-			$base_endpoint = "/wp/v2/{$endpoint}";
+			foreach ( $endpoints as $maybe_remove_endpoint_base => $endpoint_config ) {
 
-			if ( isset( $endpoints[ $base_endpoint ] ) ) {
-				unset( $endpoints[ $base_endpoint ] );
-			}
-
-			$_endpoint = "{$base_endpoint}/(?P<id>[\d]+)";
-
-			if ( isset( $endpoints[ $_endpoint ] ) ) {
-				unset( $endpoints[ $_endpoint ] );
-			}
-
-			if ( 'users' === $endpoint ) {
-
-				$_endpoint = "{$base_endpoint}/me";
-
-				if ( isset( $endpoints[ $_endpoint ] ) ) {
-					unset( $endpoints[ $_endpoint ] );
-				}
-			}
-
-			if ( 'types' === $endpoint ) {
-
-				$_endpoint = "{$base_endpoint}/(?P<type>[\w-]+)";
-
-				if ( isset( $endpoints[ $_endpoint ] ) ) {
-					unset( $endpoints[ $_endpoint ] );
-				}
-			}
-
-			if ( 'taxonomies' === $endpoint ) {
-
-				$_endpoint = "{$base_endpoint}/(?P<taxonomy>[\w-]+)";
-
-				if ( isset( $endpoints[ $_endpoint ] ) ) {
-					unset( $endpoints[ $_endpoint ] );
-				}
-			}
-
-			if ( 'statuses' === $endpoint ) {
-
-				$_endpoint = "{$base_endpoint}/(?P<status>[\w-]+)";
-
-				if ( isset( $endpoints[ $_endpoint ] ) ) {
-					unset( $endpoints[ $_endpoint ] );
-				}
-			}
-
-			if ( 'oembed' === $endpoint ) {
-
-				$_endpoints = array(
-					'/oembed/1.0',
-					'/oembed/1.0/embed',
-					'/oembed/1.0/proxy',
-				);
-
-				foreach ( $_endpoints as $_endpoint ) {
-
-					if ( isset( $endpoints[ $_endpoint ] ) ) {
-						unset( $endpoints[ $_endpoint ] );
-					}
+				//Should we remove this endpoint?
+				if ( strpos( $maybe_remove_endpoint_base, $endpoint ) !== false ) {
+					unset( $endpoints[ $maybe_remove_endpoint_base ] );
 				}
 			}
 		}
