@@ -54,11 +54,15 @@ add_filter( 'wp_headless_rest__enable_rest_nonce', '__return_true' );
  * You will need to generate and validate your nonce via the REST API.
  * Once enabled, you will also need to set a public key which will be passed to the generate nonce request
  *
+ * NOTE if all requests to the REST api provide the JWT auth header a nonce key is NOT required
+ *
  * See the REST Nonce in the plugin admin docs as well as these request examples
  * @link https://documenter.getpostman.com/view/1175138/RztkPpV4#fc567f81-ff31-442e-a236-fa247bd1fd6c
  *
  */
 add_filter( 'wp_headless_rest__enable_rest_nonce_generator_endpoint', '__return_true' );
+
+//NOTE if all requests to the REST api provide the JWT auth header a nonce key is NOT required
 add_filter( 'wp_headless_rest__rest_nonce_generator_key', function(){ return ''; } );
 
 //Enable this on your DEV environment to allow rest request without the nonce

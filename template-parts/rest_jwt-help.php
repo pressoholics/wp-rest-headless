@@ -33,6 +33,29 @@ add_filter( 'wp_headless_rest__enable_jwt', '__return_true' );
 	SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
 </pre>
 
+<p>If that doesn't work try adding this to the WordPress mod_rewrite rules like this:</p>
+<pre>
+	# BEGIN WordPress
+	<IfModule mod_rewrite.c>
+	RewriteEngine On
+	RewriteBase /
+	RewriteRule ^index\.php$ - [L]
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule . /index.php [L]
+	RewriteCond %{HTTP:Authorization} ^(.*)
+	RewriteRule ^(.*) - [E=HTTP_AUTHORIZATION:%1]
+	SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+	</IfModule>
+	# END WordPress
+</pre>
+
+<hr/>
+
+<h4>JWT and REST Nonce protection:</h4>
+<p>If you have enabled the REST Nonce system (see plugin Nonce tab of plugin docs), Requests to the JWT get-token endpoint and any request containing a valid JWT token in the Auth header will be allowed passed the nonce check.</p>
+<p>So no need to pass a nonce in any of those situations. Nonce if required for any public un-authenticated requests to the REST api.</p>
+
 <hr/>
 
 <h4>Filter Validate JWT Response:</h4>

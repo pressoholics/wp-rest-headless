@@ -15,6 +15,8 @@
 
 <p>This helps to add an extra layer of security for your public REST API endpoints by ensuring that all requests to the REST API must include a nonce.</p>
 
+<p>JWT NOTE if all requests to the REST api provide the JWT auth header a nonce key is NOT required.</p>
+
 <h2>Status:</h2>
 
 <ul>
