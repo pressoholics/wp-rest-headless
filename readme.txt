@@ -4,8 +4,8 @@ License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 Tags: WordPress as a headless cms, headless cms, headless, cms, rest api, rest, react, react native, angular
 Requires at least: 5.0.0
-Tested up to: 5.0.3
-Stable tag: 1.0
+Tested up to: 5.1.1
+Stable tag: 1.1
 
 == Description ==
 
@@ -80,7 +80,19 @@ The plugin documentation is held inside the plugin ‘options’ page in the Wor
 
 Inital commit to plugin repo
 
+= 1.1 =
+
+Made rest cleanup more specific
+Improved cleanup detection code - credit 'Daniele Scasciafratte' https://wordpress.org/support/users/mte90/
+Added ability for JWT get-token requests to bypass nonce check if enabled
+Updated docs
+
 == Upgrade Notice ==
 
 = 1.0 =
 This is the first version of plugin.
+
+= 1.1 =
+Improved REST cleanup code - credit 'Daniele Scasciafratte' https://wordpress.org/support/users/mte90/
+Added ability for JWT get-token requests to bypass nonce check if enabled
+Updated docs

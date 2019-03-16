@@ -9,7 +9,7 @@ Version: 1.0
 /**
  * Current version of plugin
  */
-define( 'WP_REST_HEADLESS_PLUGIN_VERSION', '1.0' );
+define( 'WP_REST_HEADLESS_PLUGIN_VERSION', '1.1' );
 
 /**
  * Filesystem path to plugin
